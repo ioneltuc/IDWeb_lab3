@@ -63,6 +63,7 @@ namespace WebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Company API v1"));
             }
+
             app.UseCors("CompanyAPICors");
 
             app.UseRouting();
