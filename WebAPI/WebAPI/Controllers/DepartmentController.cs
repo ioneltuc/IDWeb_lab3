@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using DataAccess.Context;
+﻿using CompanyService.Interfaces;
 using DataAccess.Models;
-using Microsoft.AspNetCore.Hosting;
-using CompanyService.Interfaces;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -26,8 +24,8 @@ namespace WebAPI.Controllers
             var departments = await _deptService.GetAllDepartments();
 
             return departments;
-
         }
+
         [HttpGet("{id}")]
         public IActionResult Get(int? id)
         {
@@ -45,14 +43,12 @@ namespace WebAPI.Controllers
             if (ModelState.IsValid)
             {
                 var res = await _deptService.AddDepartment(dep);
-                if(res)
+                if (res)
                 {
                     return Ok(new { status = StatusCodes.Status200OK, success = true, data = "Department added successfully" });
                 }
-
             }
             return BadRequest(new { status = StatusCodes.Status400BadRequest, success = false, data = "Something went wrong, Please try again" });
-            
         }
 
         [HttpPut]
@@ -67,7 +63,6 @@ namespace WebAPI.Controllers
                 }
             }
             return BadRequest(new { status = StatusCodes.Status400BadRequest, success = false, data = "Something went wrong, Please try again" });
-
         }
 
         [HttpDelete("{id}")]
@@ -76,14 +71,12 @@ namespace WebAPI.Controllers
             if (id != null)
             {
                 var res = await _deptService.DeleteDepartment(id);
-                if(res)
+                if (res)
                 {
                     return Ok(new { status = StatusCodes.Status200OK, success = true, data = "Department Deleted successfully" });
-
                 }
             }
             return BadRequest(new { status = StatusCodes.Status400BadRequest, success = false, data = "Something went wrong, Please try again" });
-
         }
     }
 }
