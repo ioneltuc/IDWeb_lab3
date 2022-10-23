@@ -13,12 +13,10 @@ namespace WebAPI.Controllers
     [ApiController]
     public class DepartmentController : Controller
     {
-        private readonly CompanyDBContext _companyDB;
         private readonly IDepartmentService _deptService;
 
-        public DepartmentController( CompanyDBContext companyDB,IDepartmentService deptService)
+        public DepartmentController(IDepartmentService deptService)
         {
-            _companyDB = companyDB;
             _deptService = deptService;
         }
 
