@@ -28,3 +28,4 @@ pipeline {
       mstest(testResultsFile: '**/*.trx', failOnError: false, keepLongStdio: true)
     }
   }
+}
