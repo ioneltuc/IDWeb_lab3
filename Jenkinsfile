@@ -1,28 +1,23 @@
 pipeline {
   agent 'any'
   stages {
-    stage('Environment') {
+    
+    stage('Compile and Clean') {
       steps {
-          echo "PATH = ${PATH}"
+          sh "mvn clean compile"
       }
     }
     
-//     stage('Dependencies') {
-//       steps {
-//         sh(script: 'dotnet restore')
-//       }
-//     }
-    
-//     stage('Build') {
-//       steps {
-//         sh(script: 'dotnet build --configuration Release', returnStdout: true)
-//       }
-//     }
-    
-//     stage('Test') {
-//       steps {
-//         sh(script: 'dotnet test -l:trx || true')        
-//       }
-//     }
+    stage('Test') {
+      steps {
+        sh "mvn test site"        
+      }
+      
+      post {
+        always{
+          junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
+        }
+      }
+    }
   }
 }
