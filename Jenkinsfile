@@ -1,13 +1,30 @@
-node {
-stage 'Checkout'
-    cleanWs()
-    checkout scm
+pipeline {
+  agent 'any'
+  stages {
+    stage('Environment') {
+      steps {
+          echo "PATH = ${PATH}"
+      }
+    }
 
-stage 'Build'
-    bat "\"C:/Program Files/dotnet/dotnet.exe\" restore "C:\Users\tenti\Desktop\AngularDotnetCore\WebAPI\WebAPI.sln""
-    bat "\"C:/Program Files/dotnet/dotnet.exe\" build "C:\Users\tenti\Desktop\AngularDotnetCore\WebAPI\WebAPI.sln""
-
-stage 'UnitTests'
-    bat returnStatus: true, script: "\"C:/Program Files/dotnet/dotnet.exe\" test "C:\Users\tenti\Desktop\AngularDotnetCore\WebAPI\WebAPI.sln" --logger \"trx;LogFileName=unit_tests.xml\" --no-build"
-    step([$class: 'MSTestPublisher', testResultsFile:"**/unit_tests.xml", failOnError: true, keepLongStdio: true])
-}
+    stage('Dependencies') {
+      steps {
+        sh(script: 'dotnet restore')
+      }
+    }
+    stage('Build') {
+      steps {
+        sh(script: 'dotnet build --configuration Release', returnStdout: true)
+      }
+    }
+    stage('Test') {
+      steps {
+        sh(script: 'dotnet test -l:trx || true')        
+      }
+    }
+  }
+  post {
+    always {
+      mstest(testResultsFile: '**/*.trx', failOnError: false, keepLongStdio: true)
+    }
+  }
