@@ -12,7 +12,8 @@ pipeline {
 
     stage('Test') {  
       steps {  
-        bat 'dotnet test %WORKSPACE%\\WebAPI\\ServicesUnitTests\\ServicesUnitTests.csproj --logger "junit;LogFilePath=TestResults\\testResults.xml"'
+        bat 'dotnet test %WORKSPACE%\\WebAPI\\ServicesUnitTests\\ServicesUnitTests.csproj --logger "junit"'
+        junit allowEmptyResults: true, testResults: '**\\TestResults\\**.xml'
       }  
     }
   
