@@ -7,12 +7,6 @@ pipeline {
       }
     }
 
-    stage('Dependencies') {
-      steps {
-        sh(script: 'dotnet restore')
-      }
-    }
-    
     stage('Build') {
       steps {
         sh(script: 'dotnet build --configuration Release', returnStdout: true)
