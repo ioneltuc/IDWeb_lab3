@@ -1,22 +1,38 @@
-pipeline {
-  agent 'any'
-  stages {
-    stage('Environment') {
-      steps {
-          echo "PATH = ${PATH}"
-      }
-    }
-
-    stage('Build') {
-      steps {
-        sh(script: 'dotnet build --configuration Release', returnStdout: true)
-      }
-    }
+// pipeline {
+//   agent 'any'
+//   stages {
+//     stage('Environment') {
+//       steps {
+//           echo "PATH = ${PATH}"
+//       }
+//     }
     
-    stage('Test') {
-      steps {
-        sh(script: 'dotnet test -l:trx || true')        
-      }
+//     stage('Dependencies') {
+//       steps {
+//         sh(script: 'dotnet restore')
+//       }
+//     }
+    
+//     stage('Build') {
+//       steps {
+//         sh(script: 'dotnet build --configuration Release', returnStdout: true)
+//       }
+//     }
+    
+//     stage('Test') {
+//       steps {
+//         sh(script: 'dotnet test -l:trx || true')        
+//       }
+//     }
+//   }
+// }
+pipeline {
+    agent any
+    stages { 
+        stage('Example') {
+            steps {
+                echo 'Hello World'
+            }
+        }
     }
-  }
 }
