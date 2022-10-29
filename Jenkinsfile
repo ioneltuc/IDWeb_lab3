@@ -6,19 +6,19 @@ pipeline {
   stages {    
     stage('Build') {  
   	  steps {  
-        bat 'dotnet build %WORKSPACE%\\Lab3\\WebAPI\\WebAPI.sln --configuration Release'
+        bat 'dotnet build %WORKSPACE%\\WebAPI\\WebAPI.sln --configuration Release'
       }  
     } 
 
     stage('Test') {  
       steps {  
-        bat 'dotnet test %WORKSPACE%\\Lab3\\WebAPI\\ServicesUnitTests\\ServicesUnitTests.csproj --logger:trx'
+        bat 'dotnet test %WORKSPACE%\\WebAPI\\ServicesUnitTests\\ServicesUnitTests.csproj --logger:trx'
       }  
     }
   
     stage("Release"){
       steps {
-	      bat 'dotnet build %WORKSPACE%\\Lab3\\WebAPI\\WebAPI.sln /p:PublishProfile=" %WORKSPACE%\\Lab3\\WebAPI\\WebAPI\\Properties\\PublishProfiles\\JenkinsProfile.pubxml" /p:Platform="Any CPU" /p:DeployOnBuild=true /m'
+	      bat 'dotnet build %WORKSPACE%\\WebAPI\\WebAPI.sln /p:PublishProfile=" %WORKSPACE%\\WebAPI\\WebAPI\\Properties\\PublishProfiles\\JenkinsProfile.pubxml" /p:Platform="Any CPU" /p:DeployOnBuild=true /m'
       }
     }
   
