@@ -17,10 +17,15 @@ pipeline {
       }  
     }
   
-    stage("Release"){
+    stage('Release'){
       steps {
 	      bat 'dotnet build %WORKSPACE%\\WebAPI\\WebAPI.sln /p:PublishProfile=" %WORKSPACE%\\WebAPI\\WebAPI\\Properties\\PublishProfiles\\JenkinsProfile.pubxml" /p:Platform="Any CPU" /p:DeployOnBuild=true /m'
       }
+    }
+
+    stage('Workspace Clean'){
+      if (CLEAN_WORKSPACE) {
+        echo 'Dir deleted'
     }
   }  
 } 
