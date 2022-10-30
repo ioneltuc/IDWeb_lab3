@@ -24,8 +24,17 @@ pipeline {
     }
 
     stage('Workspace Clean'){
-      if (CLEAN_WORKSPACE) {
-        echo 'Dir deleted'
-    }
-  }  
-} 
+      steps{
+        script{
+          if(CLEAN_WORKSPACE == "true"){
+            echo "Dir deleted"
+            echo "${CLEAN_WORKSPACE}"
+          }
+          else{
+            echo "Dir not deleted"
+          }
+        }
+      }
+    }  
+  } 
+}
