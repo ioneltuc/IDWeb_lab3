@@ -23,7 +23,7 @@ pipeline {
       }
     }
 
-    stage('Workspace Clean'){
+    stage('Workspace clean'){
       steps{
         script{
           if(CLEAN_WORKSPACE == "true"){
@@ -32,9 +32,20 @@ pipeline {
           }
           else{
             echo "Dir not deleted"
+            echo "${CLEAN_WORKSPACE}"
           }
         }
       }
-    }  
+    } 
+
+    stage('Testing frontend'){
+      steps{
+        script{
+          if(TESTING_FRONTEND == "true"){
+            echo "${TESTING_FRONTEND}"
+          }
+        }
+      }
+    }
   } 
 }
