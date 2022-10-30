@@ -1,9 +1,15 @@
 pipeline {  
+
   agent any  
+
 	environment {  
+    ON_SUCCESS_SEND_EMAIL = "true"
+    ON_FAILURE_SEND_EMAIL = "true"
 	  dotnet = 'C:\\Program Files\\dotnet\\dotnet.exe'  
  	}  
-  stages {    
+
+  stages {   
+
     stage('Build') {  
   	  steps {  
         bat 'dotnet build %WORKSPACE%\\WebAPI\\WebAPI.sln --configuration Release'
@@ -42,5 +48,16 @@ pipeline {
         }
       }
     }
+
+    stage('Email send'){
+      steps{
+        script{
+          if(ON_SUCCESS_SEND_EMAIL == "true"){
+            echo "ON_SUCCESS_SEND_EMAIL: ${ON_SUCCESS_SEND_EMAIL}"
+          }
+        }
+      }
+    }
+
   } 
 }
