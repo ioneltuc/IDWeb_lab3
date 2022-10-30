@@ -52,12 +52,21 @@ pipeline {
     stage('Email send'){
       steps{
         script{
-          if(ON_SUCCESS_SEND_EMAIL == "true"){
-            echo "ON_SUCCESS_SEND_EMAIL: ${ON_SUCCESS_SEND_EMAIL}"
+          if(currentBuild.result == null || currentBuild.result == 'SUCCESS' ){
+            ON_FAILURE_SEND_EMAIL = "false"
           }
-        }
+          else{
+            ON_SUCCESS_SEND_EMAIL = "false"
+          }
+
+          if(ON_SUCCESS_SEND_EMAIL == "true"){
+            echo "email: build succes ${JOB_NAME}, ${BUILD_NUMBER}, ${BUILD_URL}"
+          }else if(ON_FAILURE_SEND_EMAIL == "true"){
+            echo "email: build fail ${JOB_NAME}, ${BUILD_NUMBER}, ${BUILD_URL}"
+          }
+        } 
       }
     }
-
+    
   } 
 }
