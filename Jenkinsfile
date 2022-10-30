@@ -37,7 +37,7 @@ pipeline {
       steps{
         script{
           if(TESTING_FRONTEND == "true"){
-            echo "${TESTING_FRONTEND}"
+            echo "TESTING_FRONTEND: ${TESTING_FRONTEND}"
           }
         }
       }
