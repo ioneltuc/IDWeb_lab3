@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  ui:
+    image: ${DOCKER_REGISTRY-}webapi
+    build:
+      context: .
+      dockerfile: WebAPI/AngularUI/Dockerfile
+    depends_on:
+      - "sqlserver"
+  webapi:
+    image: ${DOCKER_REGISTRY-}webapi
+    build:
+      context: .
+      dockerfile: WebAPI/WebAPI/Dockerfile
+    depends_on:
+      - "sqlserver"
+  sqlserver:
+    image: mcr.microsoft.com/azure-sql-edge
+    # ports:
+    #   - "1433:1433"
+    # environment:
+    #   - SA_PASSWORD=@1234
+    #   - ACCEPT_EULA=Y
